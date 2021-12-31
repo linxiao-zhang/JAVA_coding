@@ -2,8 +2,10 @@ package com.hspedu.socket;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 public class SocketTCP01Server {
     public static void main(String[] args) throws IOException {
@@ -22,6 +24,11 @@ public class SocketTCP01Server {
             readLen = inputStream.read(buf);
         }
 
+        OutputStream outputStream = socket.getOutputStream();
+        outputStream.write("hello client".getBytes(StandardCharsets.UTF_8));
+        socket.shutdownOutput();
+
+        outputStream.close();
         inputStream.close();
         socket.close();
         serverSocket.close();
